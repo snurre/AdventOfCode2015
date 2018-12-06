@@ -23,18 +23,17 @@ class Day19 {
     }
 
     @Test
-    fun part2() {
-        val r = replacements.map { it[1].reversed() to it[0].reversed() }.toMap()
-
-        val rx = Regex(r.keys.joinToString("|"))
+    fun part22() {
         var count = 0
-        var m = molecule.reversed()
+        var m = molecule
         while (m != "e") {
-            m = rx.replace(m) { r[it.value]!! }
-            count++
-            println("$count ${m.reversed()}")
+            replacements.forEach { r ->
+                if (r[1] in m) {
+                    m = mutate(m, r[1], r[0], m.indexOf(r[1]))
+                    count++
+                }
+            }
         }
         println(count)
     }
-
 }
